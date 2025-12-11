@@ -1,5 +1,9 @@
 local TRLT2Table = {}
 
+if game.CoreGui:FindFirstChild("LoadScriptTRLT2") then
+	game.CoreGui:FindFirstChild("LoadScriptTRLT2"):Destroy()
+end
+
 local LoadScriptTRLT2 = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local UICorner = Instance.new("UICorner")
@@ -22,7 +26,7 @@ local UIListLayout = Instance.new("UIListLayout")
 Frame.Active = true
 Frame.Draggable = true
 
-LoadScriptTRLT2.Name = "LoadScript TRLT2"
+LoadScriptTRLT2.Name = "LoadScriptTRLT2"
 LoadScriptTRLT2.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 LoadScriptTRLT2.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
