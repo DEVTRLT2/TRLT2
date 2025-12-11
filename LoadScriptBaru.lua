@@ -1,3 +1,5 @@
+local TRLT2Table = {}
+
 local LoadScriptTRLT2 = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local UICorner = Instance.new("UICorner")
@@ -151,7 +153,7 @@ TextButton.MouseButton1Click:Connect(function()
 	open = not open
 end)
 
-local TRLT2Table = {}
+
 
 function TRLT2Table:NambahLabel(str)
 	local Frame = Instance.new("Frame")
