@@ -27,7 +27,7 @@ Frame.Active = true
 Frame.Draggable = true
 
 LoadScriptTRLT2.Name = "LoadScriptTRLT2"
-LoadScriptTRLT2.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+LoadScriptTRLT2.Parent = game.CoreGui
 LoadScriptTRLT2.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = LoadScriptTRLT2
@@ -134,6 +134,7 @@ ScrollingFrame.BottomImage = "rbxassetid://17582895164"
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.Visible = false
 ScrollingFrame.MidImage = "rbxassetid://15307205005"
+ScrollingFrame.AutomaticCanvasSize = "Y"
 ScrollingFrame.ScrollBarThickness = 3
 ScrollingFrame.TopImage = "rbxassetid://17582902069"
 
