@@ -450,7 +450,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel.BorderSizePixel = 0
 		TextLabel.Size = UDim2.new(1, 0, 1, 0)
 		TextLabel.Font = Enum.Font.Ubuntu
-		TextLabel.Text = text
+		TextLabel.Text = textTwo
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextLabel.TextScaled = true
 		TextLabel.TextSize = 14.000
@@ -471,7 +471,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel_2.Position = UDim2.new(0.371870428, 0, 0.50000006, 0)
 		TextLabel_2.Size = UDim2.new(0.703740835, 0, 0.600000024, 0)
 		TextLabel_2.Font = Enum.Font.Ubuntu
-		TextLabel_2.Text = textTwo
+		TextLabel_2.Text = text
 		TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextLabel_2.TextScaled = true
 		TextLabel_2.TextSize = 14.000
@@ -508,12 +508,12 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel_2.MouseLeave:Connect(function()
 			TweenService:Create(TextLabel_2, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
 		end)]]
-		TextLabel_2.Changed:Connect(function(p)
+		TextLabel.Changed:Connect(function(p)
 			if p == "GuiState" then
-				if TextLabel_2.GuiState == Enum.GuiState.Hover then
-					TweenService:Create(TextLabel_2, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(27,27,27)}):Play()
-				elseif TextLabel_2.GuiState == Enum.GuiState.Idle then
-					TweenService:Create(TextLabel_2, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
+				if TextLabel.GuiState == Enum.GuiState.Hover then
+					TweenService:Create(TextLabel, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(27,27,27)}):Play()
+				elseif TextLabel.GuiState == Enum.GuiState.Idle then
+					TweenService:Create(TextLabel, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
 				end
 			end
 		end)
