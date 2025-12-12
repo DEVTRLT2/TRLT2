@@ -293,13 +293,24 @@ function LibaryTRLT2:AddedWindows()
 	end)
 end
 
-function AddTab(namatab, logo)
+function LibaryTRLT2:AddTab(namatab, logo)
+	for _,v in pairs(TabFrame:GetChildren()) do
+		if v:IsA("ScrollingFrame") then
+			v.Visible = false
+		end
+	end
+	for _,v in pairs(ScrollingPilihanFrame:GetChildren()) do
+		if v:IsA("ImageButton") then
+			v.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+		end
+	end
 	local ScrollingFrame = Instance.new("ScrollingFrame")
 	local UIListLayout = Instance.new("UIListLayout")
 
 	ScrollingFrame.Parent = TabFrame
 	ScrollingFrame.Active = true
 	ScrollingFrame.Name = namatab
+	ScrollingFrame.Visible = true
 	ScrollingFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	ScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	ScrollingFrame.BackgroundTransparency = 1.000
@@ -322,13 +333,29 @@ function AddTab(namatab, logo)
 	local UICorner = Instance.new("UICorner")
 
 	ImageButton.Parent = ScrollingPilihanFrame
-	ImageButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	ImageButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 	ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	ImageButton.BorderSizePixel = 0
 	ImageButton.Size = UDim2.new(0, 100, 0, 100)
-	ImageButton.Image = "rbxassetid://78768739641686"
-	
+	ImageButton.Image = "rbxassetid://"..logo
+	--saat ga di pake 25, 25, 25
+	--saat di pake 45, 45, 45
 	UICorner.Parent = ImageButton
+	TextLabel.Text = namatab.."Tab"
+	
+	
+	local tabTable = {}
+	
+	function tabTable:FirstOpen()
+		for _,v in pairs(TabFrame:GetChildren()) do
+			if v:IsA("ScrollingFrame") then
+				v.Visible = false
+			end
+		end
+		ScrollingFrame.Visible = not false
+	end
+	
+	return tabTable
 end
 
 return LibaryTRLT2
