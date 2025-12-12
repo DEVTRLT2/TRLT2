@@ -392,7 +392,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		Label.BorderSizePixel = 0
 		Label.Size = UDim2.new(0.985000014, 0, 0, 40)
 
-		TextLabel.Parent = text
+		TextLabel.Parent = Label
 		TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 		TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		TextLabel.BackgroundTransparency = 1.000
@@ -404,6 +404,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextLabel.TextScaled = true
 		TextLabel.TextSize = 14.000
+		TextLabel.Text = text
 		TextLabel.TextWrapped = true
 		TextLabel.TextXAlignment = Enum.TextXAlignment.Left
 
