@@ -352,7 +352,13 @@ function LibaryTRLT2:AddTab(namatab, logo)
 				v.Visible = false
 			end
 		end
+		for _,v in pairs(ScrollingPilihanFrame:GetChildren()) do
+			if v:IsA("ImageButton") then
+				v.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			end
+		end
 		ScrollingFrame.Visible = not false
+		ImageButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 	end
 	
 	return tabTable
