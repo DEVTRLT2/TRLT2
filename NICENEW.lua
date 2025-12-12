@@ -501,11 +501,21 @@ function LibaryTRLT2:AddTab(namatab, logo)
 				end)
 			end
 		end)
-		TextButton.MouseEnter:Connect(function()
-			TweenService:Create(Frame, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(25,25,25)}):Play()
+		--[[
+		TextLabel_2.MouseEnter:Connect(function()
+			TweenService:Create(TextLabel_2, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(25,25,25)}):Play()
 		end)
-		TextButton.MouseLeave:Connect(function()
-			TweenService:Create(Frame, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
+		TextLabel_2.MouseLeave:Connect(function()
+			TweenService:Create(TextLabel_2, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
+		end)]]
+		TextLabel_2.Changed:Connect(function(p)
+			if p == "GuiState" then
+				if TextLabel_2.GuiState == Enum.GuiState.Hover then
+					TweenService:Create(TextLabel_2, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(22,22,22)}):Play()
+				elseif TextLabel_2.GuiState == Enum.GuiState.Idle then
+					TweenService:Create(TextLabel_2, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
+				end
+			end
 		end)
 	end
 	
