@@ -377,6 +377,126 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		ImageButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 	end
 	
+	function tabTable:Label(text)
+		local Label = Instance.new("Frame")
+		local TextLabel = Instance.new("TextLabel")
+		local UICorner = Instance.new("UICorner")
+
+		Label.Name = "Label"
+		Label.Parent = ScrollingFrame
+		Label.BackgroundColor3 = Color3.fromRGB(39, 39, 39)
+		Label.BackgroundTransparency = 1.000
+		Label.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Label.BorderSizePixel = 0
+		Label.Size = UDim2.new(0.985000014, 0, 0, 40)
+
+		TextLabel.Parent = text
+		TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+		TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.BackgroundTransparency = 1.000
+		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Position = UDim2.new(0.5, 0, 0.499999851, 0)
+		TextLabel.Size = UDim2.new(0.970000029, 0, 0.5, 0)
+		TextLabel.Font = Enum.Font.Ubuntu
+		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.TextScaled = true
+		TextLabel.TextSize = 14.000
+		TextLabel.TextWrapped = true
+		TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+		UICorner.CornerRadius = UDim.new(0, 4)
+		UICorner.Parent = Label
+	end
+	
+	function tabTable:Button(text,textTwo,callBack)
+		local Button = Instance.new("Frame")
+		local Frame = Instance.new("Frame")
+		local UICorner = Instance.new("UICorner")
+		local TextLabel = Instance.new("TextLabel")
+		local UIPadding = Instance.new("UIPadding")
+		local TextLabel_2 = Instance.new("TextLabel")
+		local TextButton = Instance.new("TextButton")
+		local UICorner_2 = Instance.new("UICorner")
+
+		Button.Name = "Button"
+		Button.Parent = ScrollingFrame
+		Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+		Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Button.BorderSizePixel = 0
+		Button.Size = UDim2.new(0.985000014, 0, 0, 37)
+
+		Frame.Parent = Button
+		Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+		Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+		Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Frame.BorderSizePixel = 0
+		Frame.Position = UDim2.new(0.905965209, 0, 0.500000119, 0)
+		Frame.Size = UDim2.new(0.168069512, 0, 0.699999988, 0)
+
+		UICorner.CornerRadius = UDim.new(0, 4)
+		UICorner.Parent = Frame
+
+		TextLabel.Parent = Frame
+		TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.BackgroundTransparency = 1.000
+		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Size = UDim2.new(1, 0, 1, 0)
+		TextLabel.Font = Enum.Font.Ubuntu
+		TextLabel.Text = text
+		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.TextScaled = true
+		TextLabel.TextSize = 14.000
+		TextLabel.TextWrapped = true
+
+		UIPadding.Parent = TextLabel
+		UIPadding.PaddingBottom = UDim.new(0, 4)
+		UIPadding.PaddingLeft = UDim.new(0, 2)
+		UIPadding.PaddingRight = UDim.new(0, 2)
+		UIPadding.PaddingTop = UDim.new(0, 2)
+
+		TextLabel_2.Parent = Button
+		TextLabel_2.AnchorPoint = Vector2.new(0.5, 0.5)
+		TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel_2.BackgroundTransparency = 1.000
+		TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TextLabel_2.BorderSizePixel = 0
+		TextLabel_2.Position = UDim2.new(0.371870428, 0, 0.50000006, 0)
+		TextLabel_2.Size = UDim2.new(0.703740835, 0, 0.600000024, 0)
+		TextLabel_2.Font = Enum.Font.Ubuntu
+		TextLabel_2.Text = textTwo
+		TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel_2.TextScaled = true
+		TextLabel_2.TextSize = 14.000
+		TextLabel_2.TextWrapped = true
+		TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+
+		TextButton.Parent = Button
+		TextButton.AnchorPoint = Vector2.new(0.5, 0.5)
+		TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextButton.BackgroundTransparency = 1.000
+		TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TextButton.BorderSizePixel = 0
+		TextButton.Position = UDim2.new(0.5, 0, 0.5, 0)
+		TextButton.Size = UDim2.new(1, 0, 1, 0)
+		TextButton.Font = Enum.Font.SourceSans
+		TextButton.Text = ""
+		TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+		TextButton.TextSize = 14.000
+
+		UICorner_2.CornerRadius = UDim.new(0, 4)
+		UICorner_2.Parent = Button
+		
+		TextButton.MouseButton1Click:Connect(function()
+			if callBack then
+				task.spawn(function()
+					callBack()
+				end)
+			end
+		end)
+	end
+	
 	return tabTable
 end
 
