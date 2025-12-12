@@ -31,16 +31,16 @@ local UIListLayout = Instance.new("UIListLayout")
 local TweenService = game:GetService("TweenService")
 
 function LibaryTRLT2:AddedWindows()
-	--if game.CoreGui:FindFirstChild("TRLT_DuaScreen") then
-	--	game.CoreGui:FindFirstChild("TRLT_DuaScreen"):Destroy()
-	--end
+	if game.CoreGui:FindFirstChild("TRLT_DuaScreen") then
+		game.CoreGui:FindFirstChild("TRLT_DuaScreen"):Destroy()
+	end
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
 	TRLT_DuaScreen.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	TRLT_DuaScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-	--[[MainFrame.Active = true
-	MainFrame.Draggable = true]]
+	MainFrame.Active = true
+	MainFrame.Draggable = true
 
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = TRLT_DuaScreen
