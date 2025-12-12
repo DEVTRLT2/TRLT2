@@ -31,16 +31,16 @@ local UIListLayout = Instance.new("UIListLayout")
 local TweenService = game:GetService("TweenService")
 
 function LibaryTRLT2:AddedWindows()
-	if game.CoreGui:FindFirstChild("TRLT_DuaScreen") then
-		game.CoreGui:FindFirstChild("TRLT_DuaScreen"):Destroy()
-	end
+	--if game.CoreGui:FindFirstChild("TRLT_DuaScreen") then
+	--	game.CoreGui:FindFirstChild("TRLT_DuaScreen"):Destroy()
+	--end
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
-	TRLT_DuaScreen.Parent = game.CoreGui
+	TRLT_DuaScreen.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	TRLT_DuaScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-	MainFrame.Active = true
-	MainFrame.Draggable = true
+	--[[MainFrame.Active = true
+	MainFrame.Draggable = true]]
 
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = TRLT_DuaScreen
@@ -1302,6 +1302,34 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		end
 
 		return w
+	end
+	
+	function tabTable:LabelTwo(text)
+		local TextLabel = Instance.new("TextLabel")
+		local UICorner = Instance.new("UICorner")
+		local UIPadding = Instance.new("UIPadding")
+
+		TextLabel.Parent = ScrollingFrame
+		TextLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Size = UDim2.new(1, 0, 0, 20)
+		TextLabel.Font = Enum.Font.Ubuntu
+		TextLabel.Text = text
+		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel.TextScaled = true
+		TextLabel.TextSize = 14.000
+		TextLabel.TextWrapped = true
+		TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+		UICorner.CornerRadius = UDim.new(0, 4)
+		UICorner.Parent = TextLabel
+
+		UIPadding.Parent = TextLabel
+		UIPadding.PaddingBottom = UDim.new(0, 2)
+		UIPadding.PaddingLeft = UDim.new(0, 5)
+		UIPadding.PaddingRight = UDim.new(0, 5)
+		UIPadding.PaddingTop = UDim.new(0, 2)
 	end
 
 	return tabTable
