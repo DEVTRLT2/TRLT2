@@ -424,6 +424,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		local TextLabel_2 = Instance.new("TextLabel")
 		local TextButton = Instance.new("TextButton")
 		local UICorner_2 = Instance.new("UICorner")
+		local UIE = Instance.new("UIStroke")
 
 		Button.Name = "Button"
 		Button.Parent = ScrollingFrame
@@ -439,7 +440,13 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		Frame.BorderSizePixel = 0
 		Frame.Position = UDim2.new(0.905965209, 0, 0.500000119, 0)
 		Frame.Size = UDim2.new(0.168069512, 0, 0.699999988, 0)
-
+		
+		UIE.Parent = Frame
+		UIE.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+		UIE.Color = Color3.fromRGB(255, 255, 255)
+		UIE.Transparency = 0.7
+		UIE.Thickness = 0
+		
 		UICorner.CornerRadius = UDim.new(0, 4)
 		UICorner.Parent = Frame
 
@@ -510,10 +517,12 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		end)]]
 		Frame.Changed:Connect(function(p)
 			if p == "GuiState" then
-				if Frame.GuiState == Enum.GuiState.Hover then
-					TweenService:Create(Frame, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(27,27,27)}):Play()
+				if Frame.GuiState == Enum.GuiState.Hover then--UIE
+					TweenService:Create(Frame, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(27,27,27)}):Play()
+					TweenService:Create(UIE, TweenInfo.new(0.2), {Thickness = 0.5)}):Play()
 				elseif Frame.GuiState == Enum.GuiState.Idle then
 					TweenService:Create(Frame, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
+					TweenService:Create(UIE, TweenInfo.new(0.2), {Thickness = 0)}):Play()
 				end
 			end
 		end)
