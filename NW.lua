@@ -224,7 +224,7 @@ function LibaryTRLT2:AddedWindows()
 	UICorner_5.CornerRadius = UDim.new(0, 4)
 	UICorner_5.Parent = TabFrame
 
-	ScrollingFrame.Parent = TabFrame
+	--[[ScrollingFrame.Parent = TabFrame
 	ScrollingFrame.Active = true
 	ScrollingFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	ScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -242,7 +242,7 @@ function LibaryTRLT2:AddedWindows()
 
 	UIListLayout.Parent = ScrollingFrame
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	UIListLayout.Padding = UDim.new(0, 5)
+	UIListLayout.Padding = UDim.new(0, 5)]]
 
 	local function to12H(hour)
 		hour = hour % 24
@@ -355,6 +355,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 			end
 		end
 		ScrollingFrame.Visible = not false
+		TextLabel.Text = namatab.."Tab"
 		ImageButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 	end)
 	
