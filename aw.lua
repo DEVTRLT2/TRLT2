@@ -24,7 +24,7 @@ local TextLabel_2 = Instance.new("TextLabel")
 local UIPadding_4 = Instance.new("UIPadding")
 local TabFrame = Instance.new("Frame")
 local UICorner_5 = Instance.new("UICorner")
-local ScrollingFrame = Instance.new("ScrollingFrame")
+--local ScrollingFrame = Instance.new("ScrollingFrame")
 local UIListLayout = Instance.new("UIListLayout")
 
 function LibaryTRLT2:AddedWindows()
@@ -358,6 +358,8 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel.Text = namatab.."Tab"
 		ImageButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 	end)
+	
+	
 	
 	local tabTable = {}
 	
