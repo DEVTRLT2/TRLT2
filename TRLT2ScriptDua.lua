@@ -36,7 +36,7 @@ function LibaryTRLT2:AddedWindows()
 	end
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
-	TRLT_DuaScreen.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	TRLT_DuaScreen.Parent = game.CoreGui
 	TRLT_DuaScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	MainFrame.Active = true
