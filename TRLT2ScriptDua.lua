@@ -1305,15 +1305,22 @@ function LibaryTRLT2:AddTab(namatab, logo)
 	end
 	
 	function tabTable:LabelTwo(text)
+		local frame = Instance.new("Frame")
 		local TextLabel = Instance.new("TextLabel")
 		local UICorner = Instance.new("UICorner")
 		local UIPadding = Instance.new("UIPadding")
 
-		TextLabel.Parent = ScrollingFrame
+		frame.Parent = ScrollingFrame
+		frame.Size = UDim2.new(0.985000014, 0, 0, 20)
+		frame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+		frame.BorderSizePixel = 0
+		frame.BackgroundTransparency = 1
+		
+		TextLabel.Parent = frame
 		TextLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		TextLabel.BorderSizePixel = 0
-		TextLabel.Size = UDim2.new(1, 0, 0, 20)
+		TextLabel.Size = UDim2.new(1,0,1,0)
 		TextLabel.Font = Enum.Font.Ubuntu
 		TextLabel.Text = text
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1326,10 +1333,10 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		UICorner.Parent = TextLabel
 
 		UIPadding.Parent = TextLabel
-		UIPadding.PaddingBottom = UDim.new(0, 2)
+		UIPadding.PaddingBottom = UDim.new(0, 3)
 		UIPadding.PaddingLeft = UDim.new(0, 5)
 		UIPadding.PaddingRight = UDim.new(0, 5)
-		UIPadding.PaddingTop = UDim.new(0, 2)
+		UIPadding.PaddingTop = UDim.new(0, 3)
 	end
 
 	return tabTable
