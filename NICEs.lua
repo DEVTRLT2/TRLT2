@@ -27,6 +27,9 @@ local UICorner_5 = Instance.new("UICorner")
 --local ScrollingFrame = Instance.new("ScrollingFrame")
 local UIListLayout = Instance.new("UIListLayout")
 
+
+local TweenService = game:GetService("TweenService")
+
 function LibaryTRLT2:AddedWindows()
 	if game.CoreGui:FindFirstChild("TRLT_DuaScreen") then
 		game.CoreGui:FindFirstChild("TRLT_DuaScreen"):Destroy()
@@ -490,13 +493,19 @@ function LibaryTRLT2:AddTab(namatab, logo)
 
 		UICorner_2.CornerRadius = UDim.new(0, 4)
 		UICorner_2.Parent = Button
-		
+
 		TextButton.MouseButton1Click:Connect(function()
 			if callBack then
 				task.spawn(function()
 					callBack()
 				end)
 			end
+		end)
+		TextButton.MouseEnter:Connect(function()
+			TweenService:Create(Frame, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(25,25,25)}):Play()
+		end)
+		TextButton.MouseLeave:Connect(function()
+			TweenService:Create(Frame, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(20, 20, 20)}):Play()
 		end)
 	end
 	
