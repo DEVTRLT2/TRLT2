@@ -372,6 +372,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 				v.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 			end
 		end
+		TextLabel.Text = namatab.."Tab"
 		ScrollingFrame.Visible = not false
 		ImageButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 	end
