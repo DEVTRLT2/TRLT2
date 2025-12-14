@@ -36,6 +36,7 @@ function LibaryTRLT2:AddedWindows()
 	end
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
+	TRLT_DuaScreen.Enabled = false
 	TRLT_DuaScreen.Parent = game.CoreGui
 	TRLT_DuaScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
@@ -294,6 +295,14 @@ function LibaryTRLT2:AddedWindows()
 	TRLT_DuaScreen.Destroying:Connect(function()
 		runfu:Disconnect()
 	end)
+	
+	local d = {}
+	
+	function d:Showing()
+		TRLT_DuaScreen.Enabled = true
+	end
+	
+	return d
 end
 
 function LibaryTRLT2:AddTab(namatab, logo)
@@ -942,7 +951,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		end)
 	end
 
-	function tabTable:Output()
+	function tabTable:Output(text)
 		local Output = Instance.new("Frame")
 		local TextLabel = Instance.new("TextLabel")
 		local UICorner = Instance.new("UICorner")
@@ -971,7 +980,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel.Position = UDim2.new(0.5, 0, 0.0797559991, 0)
 		TextLabel.Size = UDim2.new(0.969999969, 0, 0.119512029, 0)
 		TextLabel.Font = Enum.Font.Ubuntu
-		TextLabel.Text = "Output"
+		TextLabel.Text = text
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextLabel.TextScaled = true
 		TextLabel.TextSize = 14.000
@@ -1161,6 +1170,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		local ImageLabel = Instance.new("ImageLabel")
 		local TextButton = Instance.new("TextButton")
 		local TextLabel = Instance.new("TextLabel")
+		local TextBox = Instance.new("TextBox")
 		local ScrollingFramea = Instance.new("ScrollingFrame")
 		local UICorner_2 = Instance.new("UICorner")
 		local UIGridLayout = Instance.new("UIGridLayout")
@@ -1199,6 +1209,24 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextButton.Text = ""
 		TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 		TextButton.TextSize = 14.000
+
+		TextBox.Active = true
+		TextBox.Parent = SelecrtionClose
+		TextBox.AnchorPoint = Vector2.new(0.5, 0.5)
+		TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		TextBox.BackgroundTransparency = 1.000
+		TextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TextBox.BorderSizePixel = 0
+		TextBox.Position = UDim2.new(0, 166, 0, 18)
+		TextBox.Size = UDim2.new(0, 314, 0, 22)
+		TextBox.Font = Enum.Font.Ubuntu
+		TextBox.Text = text..": "
+		TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextBox.TextScaled = true
+		TextBox.TextSize = 14.000
+		TextBox.TextWrapped = true
+		TextBox.TextXAlignment = Enum.TextXAlignment.Left
+		TextBox.Visible = false
 
 		TextLabel.Parent = SelecrtionClose
 		TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1252,18 +1280,86 @@ function LibaryTRLT2:AddTab(namatab, logo)
 				if ScrollingFramea.Visible == false then
 					TweenService:Create(SelecrtionClose, TweenInfo.new(0.1), {Size = UDim2.new(0.985000014, 0, 0, 190)}):Play()
 					TweenService:Create(ImageLabel, TweenInfo.new(0.1), {Rotation = 0}):Play()
+					TextBox.Visible = true
+					TextLabel.Visible = false
 					wait(0.1)
 					ScrollingFramea.Visible = true
 					col = false
+					for _,v in pairs(ScrollingFramea:GetChildren()) do
+						if v:IsA("Frame") then
+							local btn = v:FindFirstChildOfClass("TextButton")
+							if btn then
+								v.Visible = true
+							end
+						end
+					end
 				else
 					TweenService:Create(SelecrtionClose, TweenInfo.new(0.1), {Size = UDim2.new(0.985000014, 0, 0, 37)}):Play()
 					TweenService:Create(ImageLabel, TweenInfo.new(0.1), {Rotation = 90}):Play()
+					TextBox.Visible = false
+					TextBox.Text = TextLabel.Text
+					TextLabel.Visible = true
 					ScrollingFramea.Visible = false
 					wait(0.1)
 					col = false
+					for _,v in pairs(ScrollingFramea:GetChildren()) do
+						if v:IsA("Frame") then
+							local btn = v:FindFirstChildOfClass("TextButton")
+							if btn then
+								v.Visible = true
+							end
+						end
+					end
 				end
 			end
 		end)
+
+		TextBox.Changed:Connect(function(p)
+			if p == "Text" then
+				if ScrollingFramea.Visible == true then
+					for _,v in pairs(ScrollingFramea:GetChildren()) do
+						if v:IsA("Frame") then
+							local btn = v:FindFirstChildOfClass("TextButton")
+							if btn then
+								if string.find(string.lower(btn.Text),string.lower(TextBox.Text)) then
+									v.Visible = true
+								else
+									v.Visible = false
+								end
+							end
+						end
+					end
+				end
+				if TextBox.Text == "" then
+					for _,v in pairs(ScrollingFramea:GetChildren()) do
+						if v:IsA("Frame") then
+							local btn = v:FindFirstChildOfClass("TextButton")
+							if btn then
+								v.Visible = true
+							end
+						end
+					end
+				end
+			end
+		end)
+
+		TextBox.Focused:Connect(function()
+			if ScrollingFramea.Visible == true then
+				for _,v in pairs(ScrollingFramea:GetChildren()) do
+					if v:IsA("Frame") then
+						local btn = v:FindFirstChildOfClass("TextButton")
+						if btn then
+							if string.find(string.lower(TextBox.Text),btn.Text) then
+								v.Visible = true
+							else
+								v.Visible = false
+							end
+						end
+					end
+				end
+			end
+		end)
+
 
 		local w = {}
 
@@ -1294,33 +1390,66 @@ function LibaryTRLT2:AddTab(namatab, logo)
 
 			TextButton_2.MouseButton1Click:Connect(function()
 				TextLabel.Text = text..": "..TextButton_2.Text
+				TextBox.Text = text..": "..TextButton_2.Text
+				TextBox.Visible = false
+				TextLabel.Visible = true
+				for _,v in pairs(ScrollingFramea:GetChildren()) do
+					if v:IsA("Frame") then
+						local btn = v:FindFirstChildOfClass("TextButton")
+						if btn then
+							v.Visible = true
+						end
+					end
+				end
 				task.spawn(function() CallBack(TextButton_2.Text) end)
 				TweenService:Create(SelecrtionClose, TweenInfo.new(0.1), {Size = UDim2.new(0.985000014, 0, 0, 37)}):Play()
 				TweenService:Create(ImageLabel, TweenInfo.new(0.1), {Rotation = 90}):Play()
 				ScrollingFramea.Visible = false
 			end)
+			local d = nil
+			TextButton_2.MouseEnter:Connect(function()
+				if not Frame:FindFirstChild("y") then
+					local s = Instance.new("UIStroke")
+					s.Name = "y"
+					s.Parent = Frame
+					s.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+					s.Color = Color3.fromRGB(255, 255, 255)
+					s.Transparency = 0.7
+					s.Thickness = 0
+					TweenService:Create(s, TweenInfo.new(0.1), {Thickness = 0.5}):Play()
+				end
+			end)
+			TextButton_2.MouseLeave:Connect(function()
+				if Frame:FindFirstChild("y") then
+					local d= Frame:FindFirstChild("y")
+					local tw = TweenService:Create(d, TweenInfo.new(0.1), {Thickness = 0})
+					tw:Play()
+					tw.Completed:Connect(function()
+						d:Destroy()
+					end)
+				end
+			end)
+
+			function w:Remove()
+				Frame:Destroy()
+			end
 		end
+
+
 
 		return w
 	end
-	
+
 	function tabTable:LabelTwo(text)
-		local frame = Instance.new("Frame")
 		local TextLabel = Instance.new("TextLabel")
 		local UICorner = Instance.new("UICorner")
 		local UIPadding = Instance.new("UIPadding")
 
-		frame.Parent = ScrollingFrame
-		frame.Size = UDim2.new(0.985000014, 0, 0, 20)
-		frame.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-		frame.BorderSizePixel = 0
-		frame.BackgroundTransparency = 1
-		
-		TextLabel.Parent = frame
+		TextLabel.Parent = ScrollingFrame
 		TextLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		TextLabel.BorderSizePixel = 0
-		TextLabel.Size = UDim2.new(1,0,1,0)
+		TextLabel.Size = UDim2.new(1, 0, 0, 20)
 		TextLabel.Font = Enum.Font.Ubuntu
 		TextLabel.Text = text
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1333,10 +1462,18 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		UICorner.Parent = TextLabel
 
 		UIPadding.Parent = TextLabel
-		UIPadding.PaddingBottom = UDim.new(0, 3)
+		UIPadding.PaddingBottom = UDim.new(0, 2)
 		UIPadding.PaddingLeft = UDim.new(0, 5)
 		UIPadding.PaddingRight = UDim.new(0, 5)
-		UIPadding.PaddingTop = UDim.new(0, 3)
+		UIPadding.PaddingTop = UDim.new(0, 2)
+
+		local ed={}
+
+		function ed:ChangeText(text)
+			TextLabel.Text = text
+		end
+
+		return ed
 	end
 
 	return tabTable
