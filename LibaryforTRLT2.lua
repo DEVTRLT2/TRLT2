@@ -37,11 +37,40 @@ function LibaryTRLT2:AddedWindows()
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
 	TRLT_DuaScreen.Enabled = false
-	TRLT_DuaScreen.Parent = game.CoreGui
-	TRLT_DuaScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	TRLT_DuaScreen.Parent = game.Players.LocalPlayer.PlayerGui
+	TRLT_DuaScreen.IgnoreGuiInset = true
+	local userinput = game:GetService("UserInputService")
+	if userinput.TouchEnabled then
+		local Buka = Instance.new("TextButton")
+		local UICorner = Instance.new("UICorner")
+		local UIPadding = Instance.new("UIPadding")
+		
+		Buka.Name = "Buka"
+		Buka.Parent = TRLT_DuaScreen
+		Buka.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+		Buka.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Buka.BorderSizePixel = 0
+		Buka.Position = UDim2.new(0, 0, 0.331476331, 0)
+		Buka.Size = UDim2.new(0.0981767178, 0, 0.0974930376, 0)
+		Buka.Font = Enum.Font.Ubuntu
+		Buka.Text = "Open/Close"
+		Buka.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Buka.TextScaled = true
+		Buka.TextSize = 14.000
+		Buka.TextWrapped = true
 
-	MainFrame.Active = true
-	MainFrame.Draggable = true
+		UICorner.Parent = Buka
+
+		UIPadding.Parent = Buka
+		UIPadding.PaddingLeft = UDim.new(0, 4)
+		UIPadding.PaddingRight = UDim.new(0, 4)
+		Buka.MouseButton1Click:Connect(function()
+			MainFrame.Visible = not MainFrame.Visible
+		end)
+	elseif userinput.KeyboardEnabled then
+		MainFrame.Active = true
+		MainFrame.Draggable = true
+	end
 
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = TRLT_DuaScreen
@@ -1475,8 +1504,186 @@ function LibaryTRLT2:AddTab(namatab, logo)
 
 		return ed
 	end
-
+	
 	return tabTable
+end
+
+function LibaryTRLT2:Notif(text)
+	if not TRLT_DuaScreen:FindFirstChild("NotifyFrame") then
+		local NotifyFrame = Instance.new("Frame")
+		local UIListLayout = Instance.new("UIListLayout")
+
+		NotifyFrame.Name = "NotifyFrame"
+		NotifyFrame.Parent = TRLT_DuaScreen
+		NotifyFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		NotifyFrame.BackgroundTransparency = 1.000
+		NotifyFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		NotifyFrame.BorderSizePixel = 0
+		NotifyFrame.Position = UDim2.new(0.00469238777, 0, 0.608037055, 0)
+		NotifyFrame.Size = UDim2.new(0.136600628, 0, 0.383333325, 0)
+
+		UIListLayout.Parent = NotifyFrame
+		UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+		UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+		UIListLayout.Padding = UDim.new(0, 2)
+	end
+	local service = game:GetService("UserInputService")
+	if service.KeyboardEnabled then
+		local KhusuPc = Instance.new("Frame")
+		local Frame = Instance.new("Frame")
+		local UICorner = Instance.new("UICorner")
+		local UIGradient = Instance.new("UIGradient")
+		local Judul = Instance.new("TextLabel")
+		local MassgeLabel = Instance.new("TextLabel")
+
+		KhusuPc.Name = "KhusuPc"
+		KhusuPc.Parent = TRLT_DuaScreen:WaitForChild("NotifyFrame")
+		KhusuPc.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+		KhusuPc.BackgroundTransparency = 1.000
+		KhusuPc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		KhusuPc.BorderSizePixel = 0
+		KhusuPc.Size = UDim2.new(1, 0, 0.130999997, 0)
+
+		Frame.Parent = KhusuPc
+		Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Frame.BorderSizePixel = 0
+		Frame.Size = UDim2.new(0, 0, 1, 0)
+
+		UICorner.CornerRadius = UDim.new(0.200000003, 0)
+		UICorner.Parent = Frame
+
+		UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.05, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.05, Color3.fromRGB(22, 22, 22)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(22, 22, 22))}
+		UIGradient.Parent = Frame
+
+		Judul.Name = "Judul"
+		Judul.Parent = Frame
+		Judul.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Judul.BackgroundTransparency = 1.000
+		Judul.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Judul.BorderSizePixel = 0
+		Judul.Position = UDim2.new(0.0700000003, 0, 0, 0)
+		Judul.Size = UDim2.new(0.5, 0, 0.5, 0)
+		Judul.Font = Enum.Font.Unknown
+		Judul.Text = "TRLT2"
+		Judul.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Judul.TextScaled = true
+		Judul.TextSize = 19.000
+		Judul.TextWrapped = true
+		Judul.Visible =false
+		Judul.TextXAlignment = Enum.TextXAlignment.Left
+
+		MassgeLabel.Name = "MassgeLabel"
+		MassgeLabel.Parent = Frame
+		MassgeLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		MassgeLabel.BackgroundTransparency = 1.000
+		MassgeLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		MassgeLabel.BorderSizePixel = 0
+		MassgeLabel.Position = UDim2.new(0.075000003, 0, 0.493000001, 0)
+		MassgeLabel.Size = UDim2.new(0.5, 0, 0.5, 0)
+		MassgeLabel.Font = Enum.Font.Ubuntu
+		MassgeLabel.Text = text
+		MassgeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		MassgeLabel.TextSize = 16.000
+		MassgeLabel.TextXAlignment = Enum.TextXAlignment.Left
+		MassgeLabel.TextYAlignment = Enum.TextYAlignment.Top
+		MassgeLabel.Visible = false
+		local pertama = TweenService:Create(Frame, TweenInfo.new(0.2), {Size = UDim2.fromScale(1,1)})
+		pertama:Play()
+		local A,B
+		A = pertama.Completed:Connect(function()
+			MassgeLabel.Visible = true
+			Judul.Visible = true
+			wait(4)
+			local kedua = TweenService:Create(Frame, TweenInfo.new(0.2), {Size = UDim2.fromScale(0,1)})
+			MassgeLabel.Visible = false
+			Judul.Visible = false
+			kedua:Play()
+			B = kedua.Completed:Connect(function()
+				KhusuPc:Destroy()
+				A:Disconnect()
+				B:Disconnect()
+				A,B = nil, nil
+			end)
+		end)
+	elseif service.TouchEnabled then
+		local KhusuHp = Instance.new("Frame")
+		local Frame = Instance.new("Frame")
+		local UICorner = Instance.new("UICorner")
+		local UIGradient = Instance.new("UIGradient")
+		local Judul = Instance.new("TextLabel")
+		local MassgeLabel = Instance.new("TextLabel")
+
+		KhusuHp.Name = "KhusuHp"
+		KhusuHp.Parent = TRLT_DuaScreen:WaitForChild("NotifyFrame")
+		KhusuHp.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+		KhusuHp.BackgroundTransparency = 1.000
+		KhusuHp.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		KhusuHp.BorderSizePixel = 0
+		KhusuHp.Position = UDim2.new(0, 0, 0.81230247, 0)
+		KhusuHp.Size = UDim2.new(1, 0, 0.18769753, 0)
+
+		Frame.Parent = KhusuHp
+		Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Frame.BorderSizePixel = 0
+		Frame.Size = UDim2.new(0, 0, 1, 0)
+
+		UICorner.CornerRadius = UDim.new(0.200000003, 0)
+		UICorner.Parent = Frame
+
+		UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.05, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.05, Color3.fromRGB(22, 22, 22)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(22, 22, 22))}
+		UIGradient.Parent = Frame
+
+		Judul.Name = "Judul"
+		Judul.Parent = Frame
+		Judul.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Judul.BackgroundTransparency = 1.000
+		Judul.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Judul.BorderSizePixel = 0
+		Judul.Position = UDim2.new(0.075000003, 0, 0, 0)
+		Judul.Size = UDim2.new(0.5, 0, 0.5, 0)
+		Judul.Font = Enum.Font.Unknown
+		Judul.Text = "TRLT2"
+		Judul.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Judul.TextScaled = true
+		Judul.TextSize = 19.000
+		Judul.TextWrapped = true
+		Judul.TextXAlignment = Enum.TextXAlignment.Left
+		Judul.TextYAlignment = Enum.TextYAlignment.Top
+
+		MassgeLabel.Name = "MassgeLabel"
+		MassgeLabel.Parent = Frame
+		MassgeLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		MassgeLabel.BackgroundTransparency = 1.000
+		MassgeLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		MassgeLabel.BorderSizePixel = 0
+		MassgeLabel.Position = UDim2.new(0.075000003, 0, 0.493000001, 0)
+		MassgeLabel.Size = UDim2.new(0.5, 0, 0.5, 0)
+		MassgeLabel.Font = Enum.Font.Ubuntu
+		MassgeLabel.Text = text
+		MassgeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		MassgeLabel.TextSize = 10.000
+		MassgeLabel.TextXAlignment = Enum.TextXAlignment.Left
+		local pertama = TweenService:Create(Frame, TweenInfo.new(0.2), {Size = UDim2.fromScale(1,1)})
+		pertama:Play()
+		local A,B
+		A = pertama.Completed:Connect(function()
+			MassgeLabel.Visible = true
+			Judul.Visible = true
+			wait(4)
+			local kedua = TweenService:Create(Frame, TweenInfo.new(0.2), {Size = UDim2.fromScale(0,1)})
+			MassgeLabel.Visible = false
+			Judul.Visible = false
+			kedua:Play()
+			B = kedua.Completed:Connect(function()
+				KhusuHp:Destroy()
+				A:Disconnect()
+				B:Disconnect()
+				A,B = nil, nil
+			end)
+		end)
+	end
 end
 
 return LibaryTRLT2
