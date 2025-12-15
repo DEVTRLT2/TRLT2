@@ -1586,7 +1586,7 @@ function LibaryTRLT2:Notif(text)
 		MassgeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 		MassgeLabel.TextSize = 16.000
 		MassgeLabel.TextXAlignment = Enum.TextXAlignment.Left
-		MassgeLabel.TextYAlignment = Enum.TextYAlignment.Top
+		MassgeLabel.TextYAlignment = Enum.TextYAlignment.Center
 		MassgeLabel.Visible = false
 		local pertama = TweenService:Create(Frame, TweenInfo.new(0.2), {Size = UDim2.fromScale(1,1)})
 		pertama:Play()
