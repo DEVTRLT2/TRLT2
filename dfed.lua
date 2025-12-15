@@ -1,5 +1,6 @@
 local LibaryTRLT2 = {}
 
+local Buka = Instance.new("TextButton")
 local TRLT_DuaScreen = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local FrameKiri = Instance.new("Frame")
@@ -36,16 +37,16 @@ function LibaryTRLT2:AddedWindows()
 	end
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
-	TRLT_DuaScreen.Enabled = false
 	TRLT_DuaScreen.Parent = game.CoreGui
 	TRLT_DuaScreen.IgnoreGuiInset = true
 	local userinput = game:GetService("UserInputService")
 	if userinput.TouchEnabled then
-		local Buka = Instance.new("TextButton")
+		
 		local UICorner = Instance.new("UICorner")
 		local UIPadding = Instance.new("UIPadding")
 		
 		Buka.Name = "Buka"
+		Buka.Visible = false
 		Buka.Parent = TRLT_DuaScreen
 		Buka.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
 		Buka.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -74,6 +75,7 @@ function LibaryTRLT2:AddedWindows()
 
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = TRLT_DuaScreen
+	MainFrame.Visible = false
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	MainFrame.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
 	MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -328,7 +330,8 @@ function LibaryTRLT2:AddedWindows()
 	local d = {}
 	
 	function d:Showing()
-		TRLT_DuaScreen.Enabled = true
+		MainFrame.Visible = true
+		Buka.Visible = true
 	end
 	
 	return d
