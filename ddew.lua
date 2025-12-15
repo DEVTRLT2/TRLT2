@@ -1478,7 +1478,8 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		return w
 	end
 
-	function tabTable:LabelTwo(text)
+	function tabTable:LabelTwo(text, line)
+		local hasil = line or 1
 		local TextLabel = Instance.new("TextLabel")
 		local UICorner = Instance.new("UICorner")
 		local UIPadding = Instance.new("UIPadding")
@@ -1487,7 +1488,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		TextLabel.BorderSizePixel = 0
-		TextLabel.Size = UDim2.new(1, 0, 0, 20)
+		TextLabel.Size = UDim2.new(1, 0, 0, (20 * hasil))
 		TextLabel.Font = Enum.Font.Ubuntu
 		TextLabel.Text = text
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
