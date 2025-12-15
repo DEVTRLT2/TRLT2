@@ -1168,7 +1168,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextButton.Text = ""
 		TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 		TextButton.TextSize = 14.000
-
+		task.spawn(function() callback({KeyCode = Enum.KeyCode[afdul], KeyString = afdul}) end)
 		UICorner_2.CornerRadius = UDim.new(0, 4)
 		UICorner_2.Parent = PressKey
 		local dd
