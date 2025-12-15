@@ -1562,7 +1562,7 @@ function LibaryTRLT2:Notif(text)
 		Judul.BackgroundTransparency = 1.000
 		Judul.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Judul.BorderSizePixel = 0
-		Judul.Position = UDim2.new(0.0700000003, 0, 0, 0)
+		Judul.Position = UDim2.new(0.0700000003, 0, 0.0399999991, 0)
 		Judul.Size = UDim2.new(0.5, 0, 0.5, 0)
 		Judul.Font = Enum.Font.Unknown
 		Judul.Text = "TRLT2"
