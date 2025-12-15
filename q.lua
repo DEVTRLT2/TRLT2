@@ -37,7 +37,7 @@ function LibaryTRLT2:AddedWindows()
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
 	TRLT_DuaScreen.Enabled = false
-	TRLT_DuaScreen.Parent = game.CoreGui
+	TRLT_DuaScreen.Parent = game.Players.LocalPlayer.PlayerGui
 	TRLT_DuaScreen.IgnoreGuiInset = true
 	local userinput = game:GetService("UserInputService")
 	if userinput.TouchEnabled then
