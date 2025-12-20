@@ -30,7 +30,7 @@ local UIListLayout = Instance.new("UIListLayout")
 
 local TweenService = game:GetService("TweenService")
 
-function LibaryTRLT2:AddedWindows()
+function LibaryTRLT2:AddedWindows(vee)
 	if game.CoreGui:FindFirstChild("TRLT_DuaScreen") then
 		game.CoreGui:FindFirstChild("TRLT_DuaScreen"):Destroy()
 	end
@@ -272,7 +272,9 @@ function LibaryTRLT2:AddedWindows()
 	TextLabel_2.Position = UDim2.new(1, 0, 0, 0)
 	TextLabel_2.Size = UDim2.new(0.115213707, 0, 0.0484593995, 0)
 	TextLabel_2.Font = Enum.Font.RobotoMono
-	TextLabel_2.Text = "Versi 1.0"
+	local versi = game:HttpGet("https://raw.githubusercontent.com/DEVTRLT2/TRLT2/refs/heads/main/idk.json")
+	local tat = game:GetService("HttpService"):JSONDecode(versi)
+	TextLabel_2.Text = "Versi " .. tat["version"]
 	TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 	TextLabel_2.TextScaled = true
 	TextLabel_2.TextSize = 17.000
