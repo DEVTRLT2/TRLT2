@@ -110,7 +110,7 @@ function LibaryTRLT2:AddedWindows()
 	ExecutorLabel.BackgroundTransparency = 1.000
 	ExecutorLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	ExecutorLabel.BorderSizePixel = 0
-	ExecutorLabel.Position = UDim2.new(0.455000103, 0, 0, 0)
+	ExecutorLabel.Position = UDim2.new(0.47, 0, 0, 0)
 	ExecutorLabel.Size = UDim2.new(0.202473074, 0, 0.0430000015, 0)
 	ExecutorLabel.Font = Enum.Font.RobotoMono
 	ExecutorLabel.Text = "Executor: "..GetExecutorName()
