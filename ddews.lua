@@ -1,6 +1,5 @@
 local LibaryTRLT2 = {}
 
-local Buka = Instance.new("TextButton")
 local TRLT_DuaScreen = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local FrameKiri = Instance.new("Frame")
@@ -37,16 +36,16 @@ function LibaryTRLT2:AddedWindows()
 	end
 
 	TRLT_DuaScreen.Name = "TRLT_DuaScreen"
+	TRLT_DuaScreen.Enabled = false
 	TRLT_DuaScreen.Parent = game.CoreGui
 	TRLT_DuaScreen.IgnoreGuiInset = true
 	local userinput = game:GetService("UserInputService")
 	if userinput.TouchEnabled then
-		
+		local Buka = Instance.new("TextButton")
 		local UICorner = Instance.new("UICorner")
 		local UIPadding = Instance.new("UIPadding")
 		
 		Buka.Name = "Buka"
-		Buka.Visible = false
 		Buka.Parent = TRLT_DuaScreen
 		Buka.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
 		Buka.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -75,13 +74,50 @@ function LibaryTRLT2:AddedWindows()
 
 	MainFrame.Name = "MainFrame"
 	MainFrame.Parent = TRLT_DuaScreen
-	MainFrame.Visible = false
 	MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	MainFrame.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
 	MainFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	MainFrame.BorderSizePixel = 0
 	MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 	MainFrame.Size = UDim2.new(0, 550, 0, 350)
+	
+	function GetExecutorName()
+		if type(identifyexecutor) == "function" then
+			local ok, name = pcall(identifyexecutor)
+			if ok and type(name) == "string" then
+				return name
+			end
+		end
+
+		if syn then
+			return "Synapse X"
+		elseif fluxus then
+			return "Fluxus"
+		elseif KRNL_LOADED then
+			return "KRNL"
+		elseif isexecutorclosure then
+			return "Generic Executor"
+		end
+
+		return "*unknown executor"
+	end
+	
+	local ExecutorLabel = Instance.new("TextLabel")
+
+	ExecutorLabel.Name = "ExecutorLabel"
+	ExecutorLabel.Parent = MainFrame
+	ExecutorLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ExecutorLabel.BackgroundTransparency = 1.000
+	ExecutorLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	ExecutorLabel.BorderSizePixel = 0
+	ExecutorLabel.Position = UDim2.new(0.455000103, 0, 0, 0)
+	ExecutorLabel.Size = UDim2.new(0.202473074, 0, 0.0430000015, 0)
+	ExecutorLabel.Font = Enum.Font.RobotoMono
+	ExecutorLabel.Text = "Executor: "..GetExecutorName()
+	ExecutorLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	ExecutorLabel.TextSize = 14.000
+	ExecutorLabel.TextXAlignment = Enum.TextXAlignment.Left
+	ExecutorLabel.TextYAlignment = Enum.TextYAlignment.Top
 
 	FrameKiri.Name = "FrameKiri"
 	FrameKiri.Parent = MainFrame
@@ -330,8 +366,7 @@ function LibaryTRLT2:AddedWindows()
 	local d = {}
 	
 	function d:Showing()
-		MainFrame.Visible = true
-		Buka.Visible = true
+		TRLT_DuaScreen.Enabled = true
 	end
 	
 	return d
@@ -1171,7 +1206,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextButton.Text = ""
 		TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 		TextButton.TextSize = 14.000
-		task.spawn(function() callback({KeyCode = Enum.KeyCode[afdul], KeyString = afdul}) end)
+
 		UICorner_2.CornerRadius = UDim.new(0, 4)
 		UICorner_2.Parent = PressKey
 		local dd
@@ -1467,19 +1502,12 @@ function LibaryTRLT2:AddTab(namatab, logo)
 			end
 		end
 
-		function w:RemoveAll()
-			for _,v in pairs(ScrollingFramea:GetChildren()) do
-				if v:IsA("Frame") then
-					v:Destroy()
-				end
-			end
-		end
+
 
 		return w
 	end
 
-	function tabTable:LabelTwo(text, line)
-		local hasil = line or 1
+	function tabTable:LabelTwo(text)
 		local TextLabel = Instance.new("TextLabel")
 		local UICorner = Instance.new("UICorner")
 		local UIPadding = Instance.new("UIPadding")
@@ -1488,7 +1516,7 @@ function LibaryTRLT2:AddTab(namatab, logo)
 		TextLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 		TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		TextLabel.BorderSizePixel = 0
-		TextLabel.Size = UDim2.new(1, 0, 0, (20 * hasil))
+		TextLabel.Size = UDim2.new(1, 0, 0, 20)
 		TextLabel.Font = Enum.Font.Ubuntu
 		TextLabel.Text = text
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -1572,7 +1600,7 @@ function LibaryTRLT2:Notif(text)
 		Judul.BackgroundTransparency = 1.000
 		Judul.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Judul.BorderSizePixel = 0
-		Judul.Position = UDim2.new(0.0700000003, 0, 0.0399999991, 0)
+		Judul.Position = UDim2.new(0.0700000003, 0, 0, 0)
 		Judul.Size = UDim2.new(0.5, 0, 0.5, 0)
 		Judul.Font = Enum.Font.Unknown
 		Judul.Text = "TRLT2"
@@ -1596,7 +1624,7 @@ function LibaryTRLT2:Notif(text)
 		MassgeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 		MassgeLabel.TextSize = 16.000
 		MassgeLabel.TextXAlignment = Enum.TextXAlignment.Left
-		MassgeLabel.TextYAlignment = Enum.TextYAlignment.Center
+		MassgeLabel.TextYAlignment = Enum.TextYAlignment.Top
 		MassgeLabel.Visible = false
 		local pertama = TweenService:Create(Frame, TweenInfo.new(0.2), {Size = UDim2.fromScale(1,1)})
 		pertama:Play()
