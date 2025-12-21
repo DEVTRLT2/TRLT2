@@ -1503,8 +1503,14 @@ function LibaryTRLT2:AddTab(namatab, logo)
 				Frame:Destroy()
 			end
 		end
-
-
+		
+		function w:RemoveAll()
+			for _,v in pairs(ScrollingFramea:GetChildren()) do
+				if v:IsA("Frame") then
+					v:Destroy()
+				end
+			end
+		end
 
 		return w
 	end
