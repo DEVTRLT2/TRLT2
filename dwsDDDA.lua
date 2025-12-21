@@ -40,33 +40,42 @@ function LibaryTRLT2:AddedWindows(vee)
 	TRLT_DuaScreen.Parent = game.CoreGui
 	TRLT_DuaScreen.IgnoreGuiInset = true
 	local userinput = game:GetService("UserInputService")
+    
 	if userinput.TouchEnabled then
-		local Buka = Instance.new("TextButton")
-		local UICorner = Instance.new("UICorner")
-		local UIPadding = Instance.new("UIPadding")
-		
-		Buka.Name = "Buka"
-		Buka.Parent = TRLT_DuaScreen
-		Buka.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-		Buka.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		Buka.BorderSizePixel = 0
-		Buka.Position = UDim2.new(0, 0, 0.331476331, 0)
-		Buka.Size = UDim2.new(0.0981767178, 0, 0.0974930376, 0)
-		Buka.Font = Enum.Font.Ubuntu
-		Buka.Text = "Open/Close"
-		Buka.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Buka.TextScaled = true
-		Buka.TextSize = 14.000
-		Buka.TextWrapped = true
+        if vee then
+            if vee["DragUI"] == true then
+                MainFrame.Active = true
+		        MainFrame.Draggable = true
+            end
+            if vee["OpenClose"] == true then
+                local Buka = Instance.new("TextButton")
+                local UICorner = Instance.new("UICorner")
+                local UIPadding = Instance.new("UIPadding")
+                
+                Buka.Name = "Buka"
+                Buka.Parent = TRLT_DuaScreen
+                Buka.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+                Buka.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                Buka.BorderSizePixel = 0
+                Buka.Position = UDim2.new(0, 0, 0.331476331, 0)
+                Buka.Size = UDim2.new(0.0981767178, 0, 0.0974930376, 0)
+                Buka.Font = Enum.Font.Ubuntu
+                Buka.Text = "Open/Close"
+                Buka.TextColor3 = Color3.fromRGB(255, 255, 255)
+                Buka.TextScaled = true
+                Buka.TextSize = 14.000
+                Buka.TextWrapped = true
 
-		UICorner.Parent = Buka
+                UICorner.Parent = Buka
 
-		UIPadding.Parent = Buka
-		UIPadding.PaddingLeft = UDim.new(0, 4)
-		UIPadding.PaddingRight = UDim.new(0, 4)
-		Buka.MouseButton1Click:Connect(function()
-			MainFrame.Visible = not MainFrame.Visible
-		end)
+                UIPadding.Parent = Buka
+                UIPadding.PaddingLeft = UDim.new(0, 4)
+                UIPadding.PaddingRight = UDim.new(0, 4)
+                Buka.MouseButton1Click:Connect(function()
+                    MainFrame.Visible = not MainFrame.Visible
+                end)
+            end
+        end
 	elseif userinput.KeyboardEnabled then
 		MainFrame.Active = true
 		MainFrame.Draggable = true
