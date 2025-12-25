@@ -236,4 +236,34 @@ function TreeManager.ChopTree(targetClass)
             
             StopTeleport() -- Matikan fake anchor
             
-            print("Pohon Tumbang! Meng
+            print("Pohon Tumbang! Mengangkut kayu...")
+            task.wait(0.5) -- Tunggu physics sebentar
+            
+            -- Bring Kayu (Looping sebentar biar gak ketinggalan)
+            local bringTime = tick()
+            local duration = 4 -- Durasi bring (detik)
+            
+            while tick() - bringTime < duration do
+                 if child.Parent then 
+                    BringWoodToPos(child, savePos)
+                 end
+                 task.wait()
+            end
+
+            -- Balik ke posisi asal
+            rootPart.CFrame = savePos
+            if humanoid then
+                humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+            end
+        end
+    end)
+    
+    -- Safety Timeout (30 Detik)
+    task.delay(30, function()
+        if connection then connection:Disconnect() end
+        isChopping = false
+        StopTeleport()
+    end)
+end
+
+return TreeManager
