@@ -1,27 +1,28 @@
 local TreeManager = {}
 
--- Load Database Axe (External)
+-- // 1. LOAD DATABASE AXE (EXTERNAL) // --
+-- Kita load sekali saja saat module pertama kali dijalankan agar hemat memori
 local success, moduleAxe = pcall(function()
     return loadstring(game:HttpGet("https://raw.githubusercontent.com/DEVTRLT2/TRLT2/refs/heads/main/AXE.lumberTyccon2"))()
 end)
 
-if not success then
-    warn("Gagal memuat database Axe!")
+if not success or type(moduleAxe) ~= "table" then
+    warn("GAGAL MEMUAT DATABASE AXE! Script mungkin tidak berjalan optimal.")
     moduleAxe = {} 
 end
 
--- Services
+-- // 2. SERVICES // --
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
-local RunService = game:GetService("RunService") -- Service baru ditambahkan
+local RunService = game:GetService("RunService")
 
 local LocalPlayer = Players.LocalPlayer
 local Interaction = ReplicatedStorage:WaitForChild("Interaction")
 local RemoteProxy = Interaction:WaitForChild("RemoteProxy")
 local ClientIsDragging = Interaction:WaitForChild("ClientIsDragging")
 
--- // HELPER FUNCTIONS // --
+-- // 3. HELPER FUNCTIONS // --
 
 local function SetPrimaryPart(model)
     if model.PrimaryPart then return end
@@ -37,6 +38,7 @@ local function BringWoodToPos(woodModel, targetCFrame)
     SetPrimaryPart(woodModel)
     if not woodModel.PrimaryPart then return end
 
+    -- Spam Ping supaya server "aware"
     for i = 1, 5 do
         ReplicatedStorage.TestPing:InvokeServer()
     end
@@ -54,7 +56,7 @@ local function BringWoodToPos(woodModel, targetCFrame)
     end
 end
 
--- // MODULE FUNCTIONS // --
+-- // 4. CORE LOGIC (GET AXE & CHOP) // --
 
 function TreeManager.GetBestAxe(targetWood)
     local backpack = LocalPlayer:FindFirstChild("Backpack")
@@ -64,6 +66,7 @@ function TreeManager.GetBestAxe(targetWood)
     local damageBest = -1
     local axeBest = nil
     
+    -- Kumpulkan semua tool dari Backpack DAN Character (yang sedang dipegang)
     local allTools = backpack:GetChildren()
     if character then
         for _, t in pairs(character:GetChildren()) do
@@ -72,15 +75,20 @@ function TreeManager.GetBestAxe(targetWood)
     end
 
     for _, tool in ipairs(allTools) do
-        local toolNameObj = tool:FindFirstChild("ToolName")
-        if toolNameObj and moduleAxe[toolNameObj.Value] then
-            local axeName = toolNameObj.Value
-            local axeStats = moduleAxe[axeName]
+        local toolNameObj = tool:FindFirstChild("ToolName") -- Cek value ToolName
+        local toolName = toolNameObj and toolNameObj.Value or tool.Name -- Fallback ke nama Tool jika value nil
 
+        if moduleAxe[toolName] then
+            local axeStats = moduleAxe[toolName]
+
+            -- [[ LOGIKA SPECIAL TREE ]] --
+            -- Cek apakah axe ini KHUSUS untuk kayu yang kita target
             if axeStats.SpecialTrees and axeStats.SpecialTrees[targetWood] then
-                return tool
+                print("Special Axe Ditemukan: " .. toolName .. " untuk " .. targetWood)
+                return tool -- Langsung return, ini prioritas utama!
             end
 
+            -- Jika bukan special, cari yang damage-nya paling sakit
             local currentDamage = axeStats.Damage or 0
             if currentDamage > damageBest then
                 damageBest = currentDamage
@@ -88,6 +96,11 @@ function TreeManager.GetBestAxe(targetWood)
             end
         end
     end
+
+    if not axeBest then
+        warn("Tidak ditemukan Axe yang cocok untuk menebang " .. targetWood)
+    end
+    
     return axeBest
 end
 
@@ -95,16 +108,18 @@ function TreeManager.ChopTree(targetClass)
     local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     local rootPart = char:WaitForChild("HumanoidRootPart")
     local humanoid = char:WaitForChild("Humanoid")
-    local savePos = rootPart.CFrame -- Simpan posisi awal
+    local savePos = rootPart.CFrame -- Simpan posisi awal pemain
 
-    -- 1. Cari Pohon
+    -- A. Cari Pohon Sesuai Class
     local targetTree = nil
     for _, region in pairs(Workspace:GetChildren()) do
         if region.Name == "TreeRegion" then
             for _, tree in pairs(region:GetChildren()) do
                 if tree:IsA("Model") and tree:FindFirstChild("TreeClass") and tree:FindFirstChild("Owner") then
+                    -- Filter: Class sesuai, tidak ada owner, dan belum ditebang (RootCut)
                     if tree.TreeClass.Value == targetClass and tree.Owner.Value == nil and not tree:FindFirstChild("RootCut") then
                         if targetClass == "Generic" then
+                            -- Filter anti semak-semak untuk Generic
                             if #tree:GetChildren() > 4 then targetTree = tree break end
                         else
                             targetTree = tree break
@@ -117,28 +132,28 @@ function TreeManager.ChopTree(targetClass)
     end
 
     if not targetTree then
-        print("Pohon " .. targetClass .. " tidak ditemukan.")
+        print("Pohon tipe " .. targetClass .. " tidak ditemukan di map.")
         return
     end
 
-    print("Target ditemukan: " .. targetTree.Name)
+    print("Target Ditemukan: " .. targetTree.Name)
 
-    -- 2. Cari Axe Terbaik
+    -- B. Ambil Axe Terbaik (Memperhitungkan Special Tree)
     local tool = TreeManager.GetBestAxe(targetClass)
-    if not tool then 
-        warn("Tidak punya axe yang cocok!")
-        return 
-    end
+    if not tool then return end 
 
+    -- Auto Equip
     if tool.Parent == LocalPlayer.Backpack then
         tool.Parent = char
     end
 
-    local axeStats = moduleAxe[tool.ToolName.Value]
-    local cooldown = axeStats.SwingCooldown
-    local damage = axeStats.Damage
+    -- Ambil stats dari database
+    local toolNameVal = tool:FindFirstChild("ToolName") and tool.ToolName.Value or tool.Name
+    local axeStats = moduleAxe[toolNameVal]
+    local cooldown = axeStats.SwingCooldown or 0.5
+    local damage = axeStats.Damage or 1
 
-    -- 3. Setup Target Posisi (Dekat Pohon)
+    -- C. Teleport & Fake Anchor (Bypass)
     local woodSection = nil
     for _, v in pairs(targetTree:GetChildren()) do
         if v.Name == "WoodSection" and v:FindFirstChild("ID") and v.ID.Value == 1 then
@@ -149,44 +164,40 @@ function TreeManager.ChopTree(targetClass)
 
     if not woodSection then return end
 
-    -- Hitung posisi target (sedikit menjauh agar tidak stuck di dalam pohon)
-    local targetPositionCFrame = woodSection.CFrame * CFrame.new(3, 0, 0) 
+    -- Posisi target: Sedikit di samping pohon biar enak nebangnya
+    local targetPositionCFrame = woodSection.CFrame * CFrame.new(3, 0, 3) 
     
-    -- // [UPDATE BARU] SYSTEM FAKE ANCHOR // --
     local teleportLoop
     
-    -- Fungsi untuk mematikan Fake Anchor
     local function StopTeleport()
         if teleportLoop then
             teleportLoop:Disconnect()
             teleportLoop = nil
         end
-        -- Reset velocity biar ga mental pas lepas
-        rootPart.AssemblyLinearVelocity = Vector3.new(0,0,0)
-        rootPart.AssemblyAngularVelocity = Vector3.new(0,0,0)
+        -- Reset velocity
+        if rootPart then
+            rootPart.AssemblyLinearVelocity = Vector3.zero
+            rootPart.AssemblyAngularVelocity = Vector3.zero
+        end
     end
 
-    -- Mulai Loop Teleport (Heartbeat)
-    -- Ini akan memaksa posisi karakter setiap frame render, seolah-olah anchored
+    -- Mulai Loop Teleport (Fake Anchor)
     teleportLoop = RunService.Heartbeat:Connect(function()
-        if char and rootPart then
-            -- Set CFrame paksa ke target
+        if char and rootPart and char.Parent then
             rootPart.CFrame = targetPositionCFrame
+            rootPart.AssemblyLinearVelocity = Vector3.zero 
+            rootPart.AssemblyAngularVelocity = Vector3.zero
             
-            -- Matikan physics velocity agar tidak fling/mental
-            rootPart.AssemblyLinearVelocity = Vector3.new(0,0,0) 
-            rootPart.AssemblyAngularVelocity = Vector3.new(0,0,0)
-            
-            -- Opsional: Matikan state humanoid agar tidak mencoba jalan
-            --[[if humanoid then
+            -- Ubah state humanoid agar tidak glitch
+            if humanoid then
                 humanoid:ChangeState(Enum.HumanoidStateType.Physics)
-            end]]
+            end
         else
             StopTeleport()
         end
     end)
 
-    -- 4. Fungsi Menebang
+    -- D. Eksekusi Penebangan
     local isChopping = true
     
     local function doChop()
@@ -194,8 +205,6 @@ function TreeManager.ChopTree(targetClass)
         
         local cutEvent = targetTree:FindFirstChild("CutEvent")
         if cutEvent then
-            -- Karena kita tidak benar-benar Anchored (hanya CFrame loop),
-            -- Server akan tetap menerima request ini sebagai valid interaction
             RemoteProxy:FireServer(cutEvent, {
                 ['tool'] = tool,
                 ['faceVector'] = Vector3.new(1, 0, 0),
@@ -211,49 +220,20 @@ function TreeManager.ChopTree(targetClass)
     task.spawn(function()
         while isChopping and targetTree and not targetTree:FindFirstChild("RootCut") do
             doChop()
-            task.wait(cooldown + 0.1)
+            task.wait(cooldown + 0.1) -- Delay aman + sedikit toleransi
         end
     end)
 
-    -- 5. Deteksi Pohon Jatuh
+    -- E. Deteksi Kayu Jatuh & Bring
     local connection
     connection = Workspace.LogModels.ChildAdded:Connect(function(child)
         local owner = child:WaitForChild("Owner", 5)
         
+        -- Cek apakah log ini milik kita
         if owner and owner.Value == LocalPlayer then
             isChopping = false 
             connection:Disconnect()
             
-            -- STOP TELEPORT SEBELUM BAWA KAYU
-            StopTeleport() 
+            StopTeleport() -- Matikan fake anchor
             
-            print("Pohon tumbang, membawa kayu...")
-            task.wait(0.5)
-            
-            local bringTime = tick()
-            local duration = 4 
-            
-            while tick() - bringTime < duration do
-                 if child.Parent then 
-                    BringWoodToPos(child, savePos)
-                 end
-                 task.wait()
-            end
-
-            -- Kembalikan pemain ke posisi awal
-            rootPart.CFrame = savePos
-            
-            -- Pastikan mode humanoid kembali normal
-            humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
-        end
-    end)
-    
-    -- Timeout safety
-    task.delay(30, function()
-        if connection then connection:Disconnect() end
-        isChopping = false
-        StopTeleport() -- Pastikan teleport mati jika timeout
-    end)
-end
-
-return TreeManager
+            print("Pohon Tumbang! Meng
