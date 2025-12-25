@@ -22,7 +22,7 @@ local ClientIsDragging = Interaction:WaitForChild("ClientIsDragging")
 
 -- // HELPER FUNCTIONS // --
 
-local function SetPrimaryPart(model)
+local function SretPrimaryPart(model)
     if model.PrimaryPart then return end
     for _, v in pairs(model:GetChildren()) do
         if v.Name == "WoodSection" and v:FindFirstChild("ID") and v.ID.Value == 1 then
