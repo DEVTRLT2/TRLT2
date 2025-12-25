@@ -178,9 +178,9 @@ function TreeManager.ChopTree(targetClass)
             rootPart.AssemblyAngularVelocity = Vector3.new(0,0,0)
             
             -- Opsional: Matikan state humanoid agar tidak mencoba jalan
-            if humanoid then
+            --[[if humanoid then
                 humanoid:ChangeState(Enum.HumanoidStateType.Physics)
-            end
+            end]]
         else
             StopTeleport()
         end
