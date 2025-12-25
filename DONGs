@@ -150,7 +150,7 @@ function TreeManager.ChopTree(targetClass)
     if not woodSection then return end
 
     -- Hitung posisi target (sedikit menjauh agar tidak stuck di dalam pohon)
-    local targetPositionCFrame = woodSection.CFrame * CFrame.new(3, 0, 3) 
+    local targetPositionCFrame = woodSection.CFrame * CFrame.new(3, 0, 0) 
     
     -- // [UPDATE BARU] SYSTEM FAKE ANCHOR // --
     local teleportLoop
