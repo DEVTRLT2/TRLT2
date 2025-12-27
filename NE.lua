@@ -154,7 +154,7 @@ function LibaryTRLT2:AddedWindows(vee)
 	ScrollingPilihanFrame.BackgroundTransparency = 1.000
 	ScrollingPilihanFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	ScrollingPilihanFrame.BorderSizePixel = 0
-
+	ScrollingPilihanFrame.AutomaticCanvasSize = "Y"
 	ScrollingPilihanFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 	ScrollingPilihanFrame.Size = UDim2.new(1, 0, 1, 0)
 	ScrollingPilihanFrame.BottomImage = "rbxassetid://17582895164"
