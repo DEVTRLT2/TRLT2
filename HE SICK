@@ -162,6 +162,7 @@ function LibaryTRLT2:AddedWindows(vee)
 	ScrollingPilihanFrame.MidImage = "rbxassetid://15307205005"
 	ScrollingPilihanFrame.ScrollBarThickness = 1
 	ScrollingPilihanFrame.TopImage = "rbxassetid://17582902069"
+	ScrollingPilihanFrame.ScrollBarImageTransparency = 1
 
 	UIGridLayout.Parent = ScrollingPilihanFrame
 	UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
